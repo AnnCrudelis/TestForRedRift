@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.IO;
+using UnityEngine;
 using UnityEngine.UI;
 
 public class PlanetMenu : MonoBehaviour
@@ -14,6 +15,14 @@ public class PlanetMenu : MonoBehaviour
     private GameObject panel;
     private void Start()
     {
+        if (!Directory.Exists("Save"))
+        {
+            Directory.CreateDirectory("Save");
+        }
+        if (!File.Exists("Save/save.txt"))
+        {
+            File.Create("Save/save.txt");
+        }
         Time.timeScale = 0;
     }
 
@@ -28,11 +37,18 @@ public class PlanetMenu : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetKey(KeyCode.Escape))
+        if (Input.GetKey(KeyCode.Backspace))
         {
             Time.timeScale = 0;
             panel.SetActive(true);
             ballhit.text = "BallHit: " + BallController.ballHit.ToString();
+        }
+    }
+    void OnApplicationQuit()
+    {
+        if (File.Exists("Save/save.txt"))
+        {
+            File.AppendAllText("Save/save.txt", "\nBallHits: " + BallController.ballHit.ToString());
         }
     }
 }

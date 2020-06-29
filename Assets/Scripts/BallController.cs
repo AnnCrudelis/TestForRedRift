@@ -31,7 +31,7 @@ public class BallController : MonoBehaviour
             gameObject.GetComponent<Rigidbody2D>().AddForce(direction, ForceMode2D.Impulse);
             powerForce = 7f;
         }
-        powerForce -= Time.deltaTime;
+        //powerForce -= Time.deltaTime;
 
     }
 }
